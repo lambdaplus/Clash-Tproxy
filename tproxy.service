@@ -1,0 +1,15 @@
+[Unit]
+Description=Clash TProxy Rule
+After=network.target
+Wants=network.target
+
+[Service]
+User=root
+Type=oneshot
+RemainAfterExit=yes
+# there must be spaces before and after semicolons
+ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /usr/bin/bash /etc/clash/iptables.sh
+ExecStop=/sbin/ip rule del fwmark 1 table 100 ; /sbin/ip route del local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables -t mangle -F
+
+[Install]
+WantedBy=multi-user.target

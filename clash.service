@@ -1,0 +1,12 @@
+[Unit]
+Description=A rule based proxy tunnel
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/clash -d /etc/clash
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
