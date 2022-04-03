@@ -5,7 +5,10 @@ After=network.target
 [Service]
 Type=simple
 User=root
+ExecStartPre=+/usr/bin/bash /etc/clash/clean.sh
 ExecStart=/usr/local/bin/clash -d /etc/clash
+ExecStartPost=+/usr/bin/bash /etc/clash/iptables.sh
+ExecStopPost=+/usr/bin/bash /etc/clash/clean.sh
 Restart=on-failure
 
 [Install]
